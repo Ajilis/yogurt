@@ -40,6 +40,7 @@
 - **Copy and export.** You can copy notes or transcripts, or save both as Markdown.
 - **Local MCP server.** Your chosen assistant app can read your notes when you allow access.
 - **Automatic stop.** Yogurt stops recording when the call ends.
+- **Recording shortcut.** ⌥⇧⌘R (Ctrl+Alt+Shift+R on Windows and Linux) starts or finishes recording from any app.
 
 ## Watch the demo
 

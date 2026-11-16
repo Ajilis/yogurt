@@ -152,7 +152,7 @@ export function Settings({ revision = 0, focus }: { revision?: number; focus?: s
           <h2 className="settings-section-heading">{t('Keyboard shortcuts')}</h2>
           <dl data-testid="settings-shortcuts" className="settings-group settings-shortcuts">
             {appShortcuts().map(([label, keys]) =>
-              <div className="settings-row" key={keys}><dt>{label}</dt><dd><kbd>{keys}</kbd></dd></div>)}
+              <div className="settings-row" key={label}><dt>{label}</dt><dd><kbd>{keys}</kbd></dd></div>)}
           </dl>
 
           <p className="settings-privacy"><Lock size={12} aria-hidden="true" />{osWords({ mac: t('Your meetings, notes and audio stay on this Mac.'), other: t('Your meetings, notes and audio stay on this computer.') })}</p>

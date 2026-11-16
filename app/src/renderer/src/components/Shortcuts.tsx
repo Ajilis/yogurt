@@ -3,8 +3,11 @@ import { Search, X } from 'lucide-react'
 import { t } from '../../../shared/i18n'
 import { Modal, ModalClose } from './Modal'
 import { keys, onMac } from '../keys'
+import { RECORD_KEYS } from '../../../shared/platform'
 
+// Start and Finish recording share one shortcut, which works from any app (main/recordShortcut.ts)
 export const appShortcuts = () => [
+  [t('Start recording'), RECORD_KEYS], [t('Finish recording'), RECORD_KEYS],
   [t('Meetings'), '⌘1'], [t('Ask'), '⌘2'], [t('Trash'), '⌘3'],
   [t('Search and commands'), '⌘K'], [t('Show or hide Ask Yogurt'), '⌘J'], [t('Settings'), '⌘,'],
   [t('Back'), '⌘['], [t('Forward'), '⌘]'], [t('Copy notes'), '⇧⌘C'], [t('Keyboard shortcuts'), '⌘/'],

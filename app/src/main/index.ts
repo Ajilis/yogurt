@@ -11,7 +11,7 @@ import { isAppRoute } from '../shared/routes'
 import { resumesNote } from '../shared/agendaNote'
 import { relaunchOptions, stripAppImageEnv } from './relaunch'
 import { capabilities, micListHelper, platformOf, supportedKinds } from '../shared/platform'
-import { app, BrowserWindow, dialog, ipcMain, nativeTheme, Notification, protocol, shell } from 'electron'
+import { app, BrowserWindow, dialog, globalShortcut, ipcMain, nativeTheme, Notification, protocol, shell } from 'electron'
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import os from 'node:os'
 import { basename, join } from 'node:path'
@@ -34,6 +34,7 @@ import { hookPreferences } from './preferences'
 import { loginItemOn, openedAtLogin, setLoginItem, syncLoginItem } from './loginItem'
 import { createMedia } from './media'
 import { createTray, linuxTrayHost } from './tray'
+import { hookRecordShortcut } from './recordShortcut'
 import { SetupController } from './setup'
 import { fakeMeasure, measureSpeed, speedClipPath, speedStore } from './asr/speedCheck'
 import { vadModelPath, whisperServerPath } from './asr/server'
@@ -410,6 +411,16 @@ function startDetection() {
       } else { const note = prepareMeeting(current); goTo(`/note/${note.id}`) }
     },
   })
+  // ⌥⇧⌘R (Ctrl+Alt+Shift+R off a Mac) from any app: the menu bar's Start recording, or its Finish recording.
+  // Not in tests or background runs, which would take the keys from the person's own Yogurt.
+  if (!isFake() && !BACKGROUND) {
+    const recordShortcut = hookRecordShortcut({
+      shortcuts: globalShortcut, active: activeMeeting,
+      start: () => { if (!activeMeeting()) begin({ title: '', event: null, app: null }) },
+      stop: (id) => { stopMeeting(id) },
+    })
+    app.on('will-quit', recordShortcut.dispose)
+  }
   refreshCalendarConsumers = () => { signals.invalidateCalendar(); void tray.refreshCalendar() }
   setTrayVisible = tray.setVisible
   trayShown = tray.shown

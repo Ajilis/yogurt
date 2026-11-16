@@ -49,6 +49,15 @@ export function supportedKinds(c: Capabilities): PermissionKind[] {
   return PERMISSION_KINDS.filter((k) => (k !== 'calendar' || c.calendar) && (k !== 'accessibility' || c.callNames))
 }
 
+/**
+ * Start or finish recording from any app, with Yogurt's window closed too (main/recordShortcut.ts): ⌥⇧⌘R on a Mac,
+ * Ctrl+Alt+Shift+R on Windows and Linux. Three modifiers, so it takes nothing a call app or a browser already uses
+ * (⇧⌘R reloads a page, Zoom records with it); never Ctrl+Alt alone, which is AltGr on many Windows keyboards.
+ */
+export const RECORD_ACCELERATOR = 'CommandOrControl+Alt+Shift+R'
+/** the same keys the Mac's way, for the Shortcuts list (shortcutLabel writes them Ctrl+Shift+Alt+R off a Mac) */
+export const RECORD_KEYS = '⌥⇧⌘R'
+
 /** keys a Mac shortcut means something else on Windows and Linux (⌃⌘ is no pair there; full screen is F11) */
 const PC_KEYS: Record<string, string> = { '⌃⌘S': 'Ctrl+Shift+S', '⌃⌘F': 'F11', '⌥⇧⌘V': 'Ctrl+Shift+V' }
 /** A shortcut written the Mac's way (⌘K, ⇧⌘C) as this computer writes it: the same on a Mac, Ctrl+K and Ctrl+Shift+C elsewhere */
